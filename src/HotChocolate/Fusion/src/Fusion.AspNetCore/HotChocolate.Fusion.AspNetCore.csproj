@@ -8,6 +8,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\AspNetCore\src\AspNetCore.Pipeline\HotChocolate.AspNetCore.Pipeline.csproj" />
     <ProjectReference Include="..\Fusion.Execution\HotChocolate.Fusion.Execution.csproj" />
+    <ProjectReference Include="..\..\..\Yaml\src\Yaml\HotChocolate.Text.Yaml.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="HotChocolate.Fusion.AspNetCore.Tests" />
   </ItemGroup>
 
   <ItemGroup>
