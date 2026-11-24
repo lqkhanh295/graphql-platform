@@ -3,9 +3,6 @@ using Microsoft.Extensions.Hosting;
 
 namespace HotChocolate.Fusion.AspNetCore.CommandLine;
 
-/// <summary>
-/// The command line of the Fusion gateway.
-/// </summary>
 internal sealed class App(IHost host)
 {
     public int Invoke(string[] args, TextWriter? output = null, TextWriter? error = null)

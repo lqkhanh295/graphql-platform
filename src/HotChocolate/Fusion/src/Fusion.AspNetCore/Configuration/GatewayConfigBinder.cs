@@ -9,8 +9,7 @@ using Microsoft.Extensions.Configuration.EnvironmentVariables;
 namespace HotChocolate.Fusion.Configuration;
 
 /// <summary>
-/// Binds a configuration section onto a model through its <see cref="JsonTypeInfo"/> and
-/// collects an error for every key the model does not declare and every value it cannot read.
+/// Binds a configuration section to its model and reports unknown keys and invalid values.
 /// </summary>
 internal sealed class GatewayConfigBinder(IConfiguration configuration, List<string> errors)
 {

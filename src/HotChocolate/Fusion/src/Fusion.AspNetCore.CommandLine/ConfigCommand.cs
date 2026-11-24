@@ -7,9 +7,6 @@ using Microsoft.Extensions.Hosting;
 
 namespace HotChocolate.Fusion.AspNetCore.CommandLine;
 
-/// <summary>
-/// The <c>config</c> command, which groups the gateway config commands.
-/// </summary>
 internal sealed class ConfigCommand : Command
 {
     public const string CommandName = "config";
@@ -21,9 +18,6 @@ internal sealed class ConfigCommand : Command
     }
 }
 
-/// <summary>
-/// The <c>config export &lt;path&gt;</c> command, which writes the effective gateway config.
-/// </summary>
 internal sealed class ConfigExportCommand : Command
 {
     public ConfigExportCommand(IHost host) : base("export")

@@ -17,8 +17,7 @@ internal sealed class YamlConfigurationSource(string fullPath) : IConfigurationS
 }
 
 /// <summary>
-/// Reads the gateway config file and remembers the line of each key for error messages.
-/// A missing file provides no keys.
+/// Loads configuration values from YAML. A missing file provides no keys.
 /// </summary>
 internal sealed class YamlConfigurationProvider(string fullPath) : ConfigurationProvider
 {
