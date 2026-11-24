@@ -32,5 +32,14 @@ public static class FusionServerAspNetCoreHostingBuilderExtensions
         string? name = null,
         int maxAllowedRequestSize = ServerDefaults.MaxAllowedRequestSize,
         bool disableDefaultSecurity = false)
-        => builder.Services.AddGraphQLGatewayServer(name, maxAllowedRequestSize, disableDefaultSecurity);
+    {
+        ArgumentNullException.ThrowIfNull(builder);
+
+        return FusionServerServiceCollectionExtensions.AddGraphQLGatewayServer(
+            builder.Services,
+            name,
+            maxAllowedRequestSize,
+            disableDefaultSecurity,
+            builder.Configuration);
+    }
 }

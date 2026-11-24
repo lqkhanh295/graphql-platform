@@ -13,6 +13,7 @@ using HotChocolate.Fusion.Configuration;
 using HotChocolate.Fusion.Policies;
 using HotChocolate.Language;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -26,12 +27,20 @@ public static class FusionServerServiceCollectionExtensions
         string? name = null,
         int maxAllowedRequestSize = ServerDefaults.MaxAllowedRequestSize,
         bool disableDefaultSecurity = false)
+        => AddGraphQLGatewayServer(services, name, maxAllowedRequestSize, disableDefaultSecurity, configuration: null);
+
+    internal static IFusionGatewayBuilder AddGraphQLGatewayServer(
+        IServiceCollection services,
+        string? name,
+        int maxAllowedRequestSize,
+        bool disableDefaultSecurity,
+        IConfigurationManager? configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentOutOfRangeException.ThrowIfNegative(maxAllowedRequestSize);
 
-        var builder = services
-            .AddGraphQLGateway(name)
+        var builder = HotChocolateFusionServiceCollectionExtensions
+            .AddGraphQLGateway(services, name, configuration)
             .AddGraphQLGatewayServerCore(maxAllowedRequestSize)
             .AddStartupInitialization()
             .AddDefaultHttpRequestInterceptor()

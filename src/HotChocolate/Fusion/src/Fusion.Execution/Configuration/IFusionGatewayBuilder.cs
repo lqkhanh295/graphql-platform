@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HotChocolate.Fusion.Configuration;
@@ -16,4 +17,10 @@ public interface IFusionGatewayBuilder
     /// Gets the application services.
     /// </summary>
     IServiceCollection Services { get; }
+
+    /// <summary>
+    /// Gets the configuration of the application host, or <c>null</c> when the gateway was added
+    /// to a service collection without a host builder.
+    /// </summary>
+    IConfigurationManager? Configuration { get; }
 }

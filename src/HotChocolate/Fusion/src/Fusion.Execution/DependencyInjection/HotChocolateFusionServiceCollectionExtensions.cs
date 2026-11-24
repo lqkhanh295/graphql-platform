@@ -6,6 +6,7 @@ using HotChocolate.Fusion.Diagnostics;
 using HotChocolate.Fusion.Execution;
 using HotChocolate.Fusion.Execution.Clients;
 using HotChocolate.Language;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.ObjectPool;
@@ -18,6 +19,12 @@ public static class HotChocolateFusionServiceCollectionExtensions
     public static IFusionGatewayBuilder AddGraphQLGateway(
         this IServiceCollection services,
         string? name = null)
+        => AddGraphQLGateway(services, name, configuration: null);
+
+    internal static IFusionGatewayBuilder AddGraphQLGateway(
+        IServiceCollection services,
+        string? name,
+        IConfigurationManager? configuration)
     {
         name ??= ISchemaDefinition.DefaultName;
 
@@ -28,7 +35,7 @@ public static class HotChocolateFusionServiceCollectionExtensions
         AddRequestExecutorManager(services);
         AddSourceSchemaScope(services);
 
-        return CreateBuilder(services, name);
+        return CreateBuilder(services, name, configuration);
     }
 
     /// <summary>
@@ -104,7 +111,8 @@ public static class HotChocolateFusionServiceCollectionExtensions
 
     private static DefaultFusionGatewayBuilder CreateBuilder(
         IServiceCollection services,
-        string name)
+        string name,
+        IConfigurationManager? configuration)
     {
         if (!services.Any(x =>
             x.ServiceType == typeof(SchemaName)
@@ -114,7 +122,7 @@ public static class HotChocolateFusionServiceCollectionExtensions
             services.AddSingleton(new SchemaName(name));
         }
 
-        var builder = new DefaultFusionGatewayBuilder(services, name);
+        var builder = new DefaultFusionGatewayBuilder(services, name, configuration);
         builder.AddDocumentCache();
         builder.AddOperationPlanContextPool();
         builder.UseDefaultPipeline();
