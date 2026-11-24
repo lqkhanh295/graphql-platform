@@ -247,6 +247,7 @@
   <Folder Name="/HotChocolate/Fusion/src/">
     <Project Path="HotChocolate/Fusion/src/Fusion.Aspire/HotChocolate.Fusion.Aspire.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.AspNetCore/HotChocolate.Fusion.AspNetCore.csproj" />
+    <Project Path="HotChocolate/Fusion/src/Fusion.AspNetCore.CommandLine/HotChocolate.Fusion.AspNetCore.CommandLine.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.Composition/HotChocolate.Fusion.Composition.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.Caching/HotChocolate.Fusion.Caching.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.Diagnostics/HotChocolate.Fusion.Diagnostics.csproj" />
@@ -266,6 +267,7 @@
   <Folder Name="/HotChocolate/Fusion/test/">
     <Project Path="HotChocolate/Fusion/test/Fusion.Aspire.Tests/HotChocolate.Fusion.Aspire.Tests.csproj" />
     <Project Path="HotChocolate/Fusion/test/Fusion.AspNetCore.Tests/HotChocolate.Fusion.AspNetCore.Tests.csproj" />
+    <Project Path="HotChocolate/Fusion/test/Fusion.AspNetCore.CommandLine.Tests/HotChocolate.Fusion.AspNetCore.CommandLine.Tests.csproj" />
     <Project Path="HotChocolate/Fusion/test/Fusion.Composition.Tests/HotChocolate.Fusion.Composition.Tests.csproj" />
     <Project Path="HotChocolate/Fusion/test/Fusion.Composition.ApolloFederation.Tests/HotChocolate.Fusion.Composition.ApolloFederation.Tests.csproj" />
     <Project Path="HotChocolate/Fusion/test/Fusion.Connectors.ApolloFederation.Compliance.Tests/HotChocolate.Fusion.Connectors.ApolloFederation.Compliance.Tests.csproj" />

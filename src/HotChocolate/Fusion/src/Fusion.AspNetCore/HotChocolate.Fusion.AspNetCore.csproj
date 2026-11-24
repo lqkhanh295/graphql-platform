@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="HotChocolate.Fusion.AspNetCore.CommandLine" />
+    <InternalsVisibleTo Include="HotChocolate.Fusion.AspNetCore.CommandLine.Tests" />
     <InternalsVisibleTo Include="HotChocolate.Fusion.AspNetCore.Tests" />
   </ItemGroup>
 

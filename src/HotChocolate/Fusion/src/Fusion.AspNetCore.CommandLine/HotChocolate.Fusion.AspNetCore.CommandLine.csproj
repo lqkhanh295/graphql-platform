@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>HotChocolate.Fusion.AspNetCore.CommandLine</PackageId>
+    <AssemblyName>HotChocolate.Fusion.AspNetCore.CommandLine</AssemblyName>
+    <RootNamespace>HotChocolate.Fusion.AspNetCore.CommandLine</RootNamespace>
+    <Description>This package contains the command line extensions for the Fusion gateway.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="HotChocolate.Fusion.AspNetCore.CommandLine.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fusion.AspNetCore\HotChocolate.Fusion.AspNetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>

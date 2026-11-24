@@ -75,6 +75,7 @@
     <Project Path="HotChocolate/Diagnostics/src/Diagnostics.Core/HotChocolate.Diagnostics.Core.csproj" />
     <Project Path="HotChocolate/Diagnostics/src/Diagnostics/HotChocolate.Diagnostics.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.AspNetCore/HotChocolate.Fusion.AspNetCore.csproj" />
+    <Project Path="HotChocolate/Fusion/src/Fusion.AspNetCore.CommandLine/HotChocolate.Fusion.AspNetCore.CommandLine.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.Aspire/HotChocolate.Fusion.Aspire.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.Caching/HotChocolate.Fusion.Caching.csproj" />
     <Project Path="HotChocolate/Fusion/src/Fusion.Composition/HotChocolate.Fusion.Composition.csproj" />
