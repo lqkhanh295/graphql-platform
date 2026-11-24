@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
+using HotChocolate.Fusion.Execution;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -201,8 +202,9 @@ public sealed class GatewayConfigFileTests : IDisposable
         exception.Message.MatchInlineSnapshot(
             """
             The gateway config is invalid:
-            - 'nitro' (config.yaml, line 4) is not a known section. Known sections: extension.
-            - 'planner' (config.yaml, line 1) is not a known section. Known sections: extension.
+            - 'nitro' (config.yaml, line 4) is not a known section. Known sections: planner, extension.
+            - 'planner.enableRequestGroupin' (config.yaml, line 3) is not a known setting. Known settings: enableRequestGrouping.
+            - 'planner.enableRequestGrouping' (config.yaml, line 2) must be a boolean, but is 'maybe'.
             - 'extension.telemetry.enabled' (config.yaml, line 8) must be a boolean, but is 'yes'.
             - 'extension.telemetry.sampleRate' (config.yaml, line 9) must be a number, but is 'often'.
             - 'extension.unknown' (config.yaml, line 10) is not a known setting. Known settings: apiId, telemetry, headers.
@@ -253,6 +255,54 @@ public sealed class GatewayConfigFileTests : IDisposable
         Assert.Equal("The gateway config already has a section named 'extension'.", exception.Message);
     }
 
+    [Fact]
+    public void AddConfigFile_Should_ApplyEnableRequestGrouping_When_FileSetsIt()
+    {
+        // arrange
+        WriteFile("config.yaml", "planner:\n  enableRequestGrouping: false\n");
+        var builder = CreateBuilder();
+        var gateway = builder.AddGraphQLGateway().AddConfigFile();
+
+        // act
+        using var host = builder.Build();
+
+        // assert
+        Assert.False(GetPlannerOptions(host, gateway.Name).EnableRequestGrouping);
+    }
+
+    [Fact]
+    public void AddConfigFile_Should_PreferFile_When_CodeModifiesPlannerOptions()
+    {
+        // arrange
+        WriteFile("config.yaml", "planner:\n  enableRequestGrouping: true\n");
+        var builder = CreateBuilder();
+        var gateway = builder
+            .AddGraphQLGateway()
+            .AddConfigFile()
+            .ModifyPlannerOptions(o => o.EnableRequestGrouping = false);
+
+        // act
+        using var host = builder.Build();
+
+        // assert
+        Assert.True(GetPlannerOptions(host, gateway.Name).EnableRequestGrouping);
+    }
+
+    [Fact]
+    public void AddConfigFile_Should_ApplyCommandLineOverride_When_CommandLineSetsPlannerKey()
+    {
+        // arrange
+        WriteFile("config.yaml", "planner:\n  enableRequestGrouping: true\n");
+        var builder = CreateBuilder("--Fusion:planner:enableRequestGrouping=false");
+        var gateway = builder.AddGraphQLGateway().AddConfigFile();
+
+        // act
+        using var host = builder.Build();
+
+        // assert
+        Assert.False(GetPlannerOptions(host, gateway.Name).EnableRequestGrouping);
+    }
+
     public void Dispose() => Directory.Delete(_directory, recursive: true);
 
     private void WriteFile(string name, string content)
@@ -266,6 +316,14 @@ public sealed class GatewayConfigFileTests : IDisposable
                 ContentRootPath = _directory,
                 EnvironmentName = Environments.Production
             });
+
+    private static Planning.OperationPlannerOptions GetPlannerOptions(IHost host, string gatewayName)
+    {
+        var setup = host.Services.GetRequiredService<IOptionsMonitor<FusionGatewaySetup>>().Get(gatewayName);
+        return FusionRequestExecutorManager.CreatePlannerOptions(
+            setup,
+            FusionRequestExecutorManager.CreateOptions(setup));
+    }
 }
 
 public sealed class ExtensionConfig

@@ -97,7 +97,7 @@ public static partial class AspNetCoreFusionGatewayBuilderExtensions
             .AddSingleton<IValidateOptions<GatewayConfigStartupValidation>, GatewayConfigStartupValidator>();
         builder.Services.AddOptions<GatewayConfigStartupValidation>().ValidateOnStart();
 
-        return builder;
+        return builder.AddConfigSection(new PlannerConfigSection());
     }
 
     private static GatewayConfigFile ResolveConfigFile(

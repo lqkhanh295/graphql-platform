@@ -311,7 +311,13 @@ internal sealed class FusionRequestExecutorManager
         return options;
     }
 
-    private static OperationPlannerOptions CreatePlannerOptions(FusionGatewaySetup setup, FusionOptions options)
+    /// <summary>
+    /// Creates the planner options of a gateway from its setup and its core options.
+    /// </summary>
+    /// <param name="setup">The setup of the gateway.</param>
+    /// <param name="options">The core options created from the same setup.</param>
+    /// <returns>The read-only planner options.</returns>
+    public static OperationPlannerOptions CreatePlannerOptions(FusionGatewaySetup setup, FusionOptions options)
     {
         var plannerOptions = new OperationPlannerOptions
         {
